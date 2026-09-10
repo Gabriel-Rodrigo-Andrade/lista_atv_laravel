@@ -23,3 +23,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::view('/admin', 'admin')->middleware(['auth', 'role:admin'])->name('admin');
+Route::view('/professor', 'professor')->middleware(['auth', 'role:professor,admin'])->name('professor');
