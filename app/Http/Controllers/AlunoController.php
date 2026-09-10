@@ -24,10 +24,46 @@ class AlunoController extends Controller
         $quantidade = Aluno::count();
         return view('alunos.index', compact('alunos', 'quantidade'));
     }
-    public function create(): View { return view('alunos.create'); }
-    public function store(Request $request): string { return 'Salvar aluno'; }
-    public function show(string $aluno): View { return view('alunos.show'); }
-    public function edit(string $aluno): View { return view('alunos.edit'); }
-    public function update(Request $request, string $aluno): string { return 'Atualizar aluno: '.$aluno; }
-    public function destroy(string $aluno): string { return 'Excluir aluno: '.$aluno; }
+    public function create(): View
+    {
+        return view('alunos.create');
+    }
+
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $dados = $request->validate([
+            'nome' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:alunos,email'],
+            'curso' => ['required', 'string', 'max:255'],
+        ]);
+        Aluno::create($dados);
+        return redirect()->route('alunos.index')->with('sucesso', 'Aluno cadastrado com sucesso.');
+    }
+
+    public function show(Aluno $aluno): View
+    {
+        return view('alunos.show', compact('aluno'));
+    }
+
+    public function edit(Aluno $aluno): View
+    {
+        return view('alunos.edit', compact('aluno'));
+    }
+
+    public function update(Request $request, Aluno $aluno): \Illuminate\Http\RedirectResponse
+    {
+        $dados = $request->validate([
+            'nome' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', \Illuminate\Validation\Rule::unique('alunos', 'email')->ignore($aluno)],
+            'curso' => ['required', 'string', 'max:255'],
+        ]);
+        $aluno->update($dados);
+        return redirect()->route('alunos.index')->with('sucesso', 'Aluno atualizado com sucesso.');
+    }
+
+    public function destroy(Aluno $aluno): \Illuminate\Http\RedirectResponse
+    {
+        $aluno->delete();
+        return redirect()->route('alunos.index')->with('sucesso', 'Aluno excluído com sucesso.');
+    }
 }

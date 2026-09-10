@@ -15,6 +15,9 @@
 </head>
 <body>
     @include('partials.menu')
-    <main>@yield('content')</main>
+    <main>
+        @if (session('sucesso'))<p class="sucesso">{{ session('sucesso') }}</p>@endif
+        @yield('content')
+    </main>
 </body>
 </html>

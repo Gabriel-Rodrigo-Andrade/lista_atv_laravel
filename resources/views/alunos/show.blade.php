@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Detalhes do aluno')
 @section('content')
-<h1>Detalhes do aluno</h1>
+<h1>{{ $aluno->nome }}</h1>
+<p>E-mail: {{ $aluno->email }}</p>
+<p>Curso: {{ $aluno->curso }}</p>
 @endsection

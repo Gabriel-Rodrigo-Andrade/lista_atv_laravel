@@ -14,7 +14,15 @@
 @else
     <ul>
         @foreach ($alunos as $aluno)
-            <li>{{ $aluno['nome'] }}</li>
+            <li>
+                <a href="{{ route('alunos.show', $aluno) }}">{{ $aluno->nome }}</a> — {{ $aluno->curso }}
+                <a href="{{ route('alunos.edit', $aluno) }}">Editar</a>
+                <form method="POST" action="{{ route('alunos.destroy', $aluno) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button>Excluir</button>
+                </form>
+            </li>
         @endforeach
     </ul>
 @endif
