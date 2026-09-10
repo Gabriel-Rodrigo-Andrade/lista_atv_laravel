@@ -14,6 +14,7 @@
     </style>
 </head>
 <body>
+    @include('partials.menu')
     <main>@yield('content')</main>
 </body>
 </html>
