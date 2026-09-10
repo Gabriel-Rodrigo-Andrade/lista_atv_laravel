@@ -10,6 +10,6 @@ class AlunoSeeder extends Seeder
     public function run(): void
     {
         $cursos = \App\Models\Curso::pluck('id');
-        Aluno::factory()->count(10)->sequence(fn ($sequence) => ['curso_id' => $cursos[$sequence->index % $cursos->count()]])->create();
+        Aluno::factory()->count(10)->sequence(fn ($sequence) => ['curso_id' => $cursos[$sequence->index % $cursos->count()], 'user_id' => \App\Models\User::where('role', 'professor')->value('id')])->create();
     }
 }

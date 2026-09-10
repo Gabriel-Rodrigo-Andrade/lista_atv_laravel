@@ -32,7 +32,7 @@ class AlunoController extends Controller
     public function create(): View
     {
         $cursos = Curso::orderBy('nome')->get();
-        $professores = User::orderBy('name')->get();
+        $professores = User::where('role', 'professor')->orderBy('name')->get();
         return view('alunos.create', compact('cursos', 'professores'));
     }
 
@@ -51,7 +51,7 @@ class AlunoController extends Controller
     public function edit(Aluno $aluno): View
     {
         $cursos = Curso::orderBy('nome')->get();
-        $professores = User::orderBy('name')->get();
+        $professores = User::where('role', 'professor')->orderBy('name')->get();
         return view('alunos.edit', compact('aluno', 'cursos', 'professores'));
     }
 
