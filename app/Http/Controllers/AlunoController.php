@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aluno;
+use App\Http\Requests\AlunoRequest;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -29,13 +30,9 @@ class AlunoController extends Controller
         return view('alunos.create');
     }
 
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(AlunoRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $dados = $request->validate([
-            'nome' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:alunos,email'],
-            'curso' => ['required', 'string', 'max:255'],
-        ]);
+        $dados = $request->validated();
         Aluno::create($dados);
         return redirect()->route('alunos.index')->with('sucesso', 'Aluno cadastrado com sucesso.');
     }
@@ -50,13 +47,9 @@ class AlunoController extends Controller
         return view('alunos.edit', compact('aluno'));
     }
 
-    public function update(Request $request, Aluno $aluno): \Illuminate\Http\RedirectResponse
+    public function update(AlunoRequest $request, Aluno $aluno): \Illuminate\Http\RedirectResponse
     {
-        $dados = $request->validate([
-            'nome' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', \Illuminate\Validation\Rule::unique('alunos', 'email')->ignore($aluno)],
-            'curso' => ['required', 'string', 'max:255'],
-        ]);
+        $dados = $request->validated();
         $aluno->update($dados);
         return redirect()->route('alunos.index')->with('sucesso', 'Aluno atualizado com sucesso.');
     }
