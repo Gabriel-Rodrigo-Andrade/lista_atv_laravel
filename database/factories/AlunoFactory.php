@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Curso;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AlunoFactory extends Factory
@@ -11,7 +12,7 @@ class AlunoFactory extends Factory
         return [
             'nome' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'curso_id' => \App\Models\Curso::factory(),
+            'curso_id' => Curso::factory(),
         ];
     }
 }

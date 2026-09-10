@@ -13,6 +13,7 @@
     @endforeach
 </select>
 @error('curso_id')<p class="erro">{{ $message }}</p>@enderror
+@if (auth()->user()->isAdmin())
 <label for="user_id">Professor responsável</label>
 <select id="user_id" name="user_id">
     <option value="">Sem professor</option>
@@ -21,4 +22,5 @@
     @endforeach
 </select>
 @error('user_id')<p class="erro">{{ $message }}</p>@enderror
+@endif
 <p><button type="submit">Salvar</button> <a href="{{ route('alunos.index') }}">Cancelar</a></p>

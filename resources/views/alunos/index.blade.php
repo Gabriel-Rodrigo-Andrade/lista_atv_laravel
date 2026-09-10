@@ -16,12 +16,16 @@
         @foreach ($alunos as $aluno)
             <li>
                 <a href="{{ route('alunos.show', $aluno) }}">{{ $aluno->nome }}</a> — {{ $aluno->curso->nome }}
-                <a href="{{ route('alunos.edit', $aluno) }}">Editar</a>
+                @can('update', $aluno)
+                    <a href="{{ route('alunos.edit', $aluno) }}">Editar</a>
+                @endcan
+                @can('delete', $aluno)
                 <form method="POST" action="{{ route('alunos.destroy', $aluno) }}">
                     @csrf
                     @method('DELETE')
                     <button>Excluir</button>
                 </form>
+                @endcan
             </li>
         @endforeach
     </ul>

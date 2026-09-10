@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Aluno;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -9,7 +10,11 @@ class AlunoRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        $aluno = $this->route('aluno');
+
+        return $aluno
+            ? ($this->user()?->can('update', $aluno) ?? false)
+            : ($this->user()?->can('create', Aluno::class) ?? false);
     }
 
     public function rules(): array
@@ -18,7 +23,7 @@ class AlunoRequest extends FormRequest
             'nome' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('alunos', 'email')->ignore($this->route('aluno'))],
             'curso_id' => ['required', 'integer', 'exists:cursos,id'],
-            'user_id' => ['nullable', 'integer', 'exists:users,id'],
+            'user_id' => [Rule::excludeIf(! $this->user()?->isAdmin()), 'nullable', 'integer', Rule::exists('users', 'id')->where('role', 'professor')],
         ];
     }
 

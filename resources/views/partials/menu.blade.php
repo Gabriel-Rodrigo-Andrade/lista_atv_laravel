@@ -1,7 +1,9 @@
 <nav aria-label="Navegação principal">
     <a href="{{ route('home') }}">Início</a>
     <a href="{{ route('alunos.index') }}">Alunos</a>
-    <a href="{{ route('alunos.create') }}">Cadastrar aluno</a>
+    @can('create', \App\Models\Aluno::class)
+        <a href="{{ route('alunos.create') }}">Cadastrar aluno</a>
+    @endcan
     <a href="{{ route('cursos.index') }}">Cursos</a>
     @auth
         @if (auth()->user()->isAdmin())<a href="{{ route('admin') }}">Administração</a>@endif
