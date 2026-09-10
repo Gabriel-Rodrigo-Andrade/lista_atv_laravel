@@ -7,6 +7,7 @@ use App\Models\Curso;
 use App\Models\User;
 use App\Http\Requests\AlunoRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class AlunoController extends Controller
@@ -50,6 +51,7 @@ class AlunoController extends Controller
 
     public function edit(Aluno $aluno): View
     {
+        Gate::authorize('update', $aluno);
         $cursos = Curso::orderBy('nome')->get();
         $professores = User::where('role', 'professor')->orderBy('name')->get();
         return view('alunos.edit', compact('aluno', 'cursos', 'professores'));
@@ -57,6 +59,7 @@ class AlunoController extends Controller
 
     public function update(AlunoRequest $request, Aluno $aluno): \Illuminate\Http\RedirectResponse
     {
+        Gate::authorize('update', $aluno);
         $dados = $request->validated();
         $aluno->update($dados);
         return redirect()->route('alunos.index')->with('sucesso', 'Aluno atualizado com sucesso.');
