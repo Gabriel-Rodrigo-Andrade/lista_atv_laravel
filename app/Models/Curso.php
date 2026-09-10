@@ -9,5 +9,10 @@ class Curso extends Model
 {
     use HasFactory;
 
+    public function alunos(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Aluno::class);
+    }
+
     protected $fillable = ['nome'];
 }

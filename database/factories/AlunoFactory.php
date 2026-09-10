@@ -11,7 +11,7 @@ class AlunoFactory extends Factory
         return [
             'nome' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'curso' => fake()->randomElement(['Informática', 'Administração', 'Enfermagem']),
+            'curso_id' => \App\Models\Curso::factory(),
         ];
     }
 }

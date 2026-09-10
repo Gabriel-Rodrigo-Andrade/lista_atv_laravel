@@ -9,6 +9,11 @@ class Aluno extends Model
 {
     use HasFactory;
 
+    public function curso(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Curso::class);
+    }
+
     protected $table = 'alunos';
-    protected $fillable = ['nome', 'email', 'curso'];
+    protected $fillable = ['nome', 'email', 'curso_id'];
 }

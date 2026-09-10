@@ -2,4 +2,5 @@
     <a href="{{ route('home') }}">Início</a>
     <a href="{{ route('alunos.index') }}">Alunos</a>
     <a href="{{ route('alunos.create') }}">Cadastrar aluno</a>
+    <a href="{{ route('cursos.index') }}">Cursos</a>
 </nav>

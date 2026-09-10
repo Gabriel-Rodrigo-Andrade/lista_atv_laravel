@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aluno;
+use App\Models\Curso;
 use App\Http\Requests\AlunoRequest;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -11,9 +12,11 @@ class AlunoController extends Controller
 {
     public function index(Request $request): View
     {
-        $consulta = Aluno::query();
+        $consulta = Aluno::with('curso');
         if ($request->filled('curso')) {
-            $consulta->where('curso', $request->input('curso'));
+            $consulta->whereHas('curso', function ($consultaCurso) use ($request) {
+                $consultaCurso->where('nome', $request->input('curso'));
+            });
         }
         if ($request->filled('nome')) {
             $consulta->where('nome', 'like', '%'.$request->input('nome').'%');
@@ -27,7 +30,8 @@ class AlunoController extends Controller
     }
     public function create(): View
     {
-        return view('alunos.create');
+        $cursos = Curso::orderBy('nome')->get();
+        return view('alunos.create', compact('cursos'));
     }
 
     public function store(AlunoRequest $request): \Illuminate\Http\RedirectResponse
@@ -44,7 +48,8 @@ class AlunoController extends Controller
 
     public function edit(Aluno $aluno): View
     {
-        return view('alunos.edit', compact('aluno'));
+        $cursos = Curso::orderBy('nome')->get();
+        return view('alunos.edit', compact('aluno', 'cursos'));
     }
 
     public function update(AlunoRequest $request, Aluno $aluno): \Illuminate\Http\RedirectResponse

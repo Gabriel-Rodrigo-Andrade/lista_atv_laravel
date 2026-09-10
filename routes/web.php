@@ -9,3 +9,5 @@ Route::get('/contato', function () { return 'Contato da escola'; });
 Route::get('/produto/{id}', function (string $id) { return 'Produto: '.$id; });
 Route::get('/categoria/{id}', function (string $id) { return 'Categoria: '.$id; });
 Route::get('/usuario/{id}', function (string $id) { return 'Usuario: '.$id; });
+
+Route::resource('cursos', \App\Http\Controllers\CursoController::class)->only(['index', 'show']);

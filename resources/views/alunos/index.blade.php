@@ -15,7 +15,7 @@
     <ul>
         @foreach ($alunos as $aluno)
             <li>
-                <a href="{{ route('alunos.show', $aluno) }}">{{ $aluno->nome }}</a> — {{ $aluno->curso }}
+                <a href="{{ route('alunos.show', $aluno) }}">{{ $aluno->nome }}</a> — {{ $aluno->curso->nome }}
                 <a href="{{ route('alunos.edit', $aluno) }}">Editar</a>
                 <form method="POST" action="{{ route('alunos.destroy', $aluno) }}">
                     @csrf

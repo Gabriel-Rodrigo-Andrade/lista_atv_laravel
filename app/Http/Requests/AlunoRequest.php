@@ -17,7 +17,7 @@ class AlunoRequest extends FormRequest
         return [
             'nome' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('alunos', 'email')->ignore($this->route('aluno'))],
-            'curso' => ['required', 'string', 'max:255'],
+            'curso_id' => ['required', 'integer', 'exists:cursos,id'],
         ];
     }
 
@@ -31,9 +31,9 @@ class AlunoRequest extends FormRequest
             'email.email' => 'Informe um e-mail válido.',
             'email.max' => 'O e-mail deve ter no máximo 255 caracteres.',
             'email.unique' => 'Este e-mail já está cadastrado.',
-            'curso.required' => 'Informe o curso do aluno.',
-            'curso.string' => 'O curso deve ser um texto.',
-            'curso.max' => 'O curso deve ter no máximo 255 caracteres.',
+            'curso_id.required' => 'Selecione o curso do aluno.',
+            'curso_id.integer' => 'Selecione um curso válido.',
+            'curso_id.exists' => 'O curso selecionado não existe.',
         ];
     }
 }
