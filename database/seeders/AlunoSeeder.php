@@ -2,12 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Aluno;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class AlunoSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->call(AlunoSeeder::class);
+        Aluno::factory()->count(10)->create();
     }
 }
