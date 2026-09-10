@@ -13,4 +13,12 @@
     @endforeach
 </select>
 @error('curso_id')<p class="erro">{{ $message }}</p>@enderror
+<label for="user_id">Professor responsável</label>
+<select id="user_id" name="user_id">
+    <option value="">Sem professor</option>
+    @foreach ($professores as $professor)
+        <option value="{{ $professor->id }}" @selected(old('user_id', $aluno->user_id ?? '') == $professor->id)>{{ $professor->name }}</option>
+    @endforeach
+</select>
+@error('user_id')<p class="erro">{{ $message }}</p>@enderror
 <p><button type="submit">Salvar</button> <a href="{{ route('alunos.index') }}">Cancelar</a></p>

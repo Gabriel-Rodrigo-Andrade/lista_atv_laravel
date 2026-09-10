@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Aluno;
 use App\Models\Curso;
+use App\Models\User;
 use App\Http\Requests\AlunoRequest;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -31,7 +32,8 @@ class AlunoController extends Controller
     public function create(): View
     {
         $cursos = Curso::orderBy('nome')->get();
-        return view('alunos.create', compact('cursos'));
+        $professores = User::orderBy('name')->get();
+        return view('alunos.create', compact('cursos', 'professores'));
     }
 
     public function store(AlunoRequest $request): \Illuminate\Http\RedirectResponse
@@ -49,7 +51,8 @@ class AlunoController extends Controller
     public function edit(Aluno $aluno): View
     {
         $cursos = Curso::orderBy('nome')->get();
-        return view('alunos.edit', compact('aluno', 'cursos'));
+        $professores = User::orderBy('name')->get();
+        return view('alunos.edit', compact('aluno', 'cursos', 'professores'));
     }
 
     public function update(AlunoRequest $request, Aluno $aluno): \Illuminate\Http\RedirectResponse

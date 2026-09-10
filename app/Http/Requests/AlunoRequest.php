@@ -18,12 +18,15 @@ class AlunoRequest extends FormRequest
             'nome' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('alunos', 'email')->ignore($this->route('aluno'))],
             'curso_id' => ['required', 'integer', 'exists:cursos,id'],
+            'user_id' => ['nullable', 'integer', 'exists:users,id'],
         ];
     }
 
     public function messages(): array
     {
         return [
+            'user_id.integer' => 'Selecione um professor válido.',
+            'user_id.exists' => 'O professor selecionado não existe.',
             'nome.required' => 'Informe o nome do aluno.',
             'nome.string' => 'O nome deve ser um texto.',
             'nome.max' => 'O nome deve ter no máximo 255 caracteres.',

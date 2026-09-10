@@ -22,6 +22,11 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+    public function alunos(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Aluno::class);
+    }
+
     protected function casts(): array
     {
         return [

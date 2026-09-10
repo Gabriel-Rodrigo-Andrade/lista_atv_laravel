@@ -4,4 +4,5 @@
 <h1>{{ $aluno->nome }}</h1>
 <p>E-mail: {{ $aluno->email }}</p>
 <p>Curso: {{ $aluno->curso->nome }}</p>
+<p>Professor: {{ $aluno->user?->name ?? 'Sem professor' }}</p>
 @endsection
